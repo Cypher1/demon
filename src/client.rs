@@ -1,5 +1,5 @@
-use std::net::TcpStream;
 use std::io::{self, Read, Write};
+use std::net::TcpStream;
 
 pub fn client(target: &str) {
     let output = "GET / HTTP/1.1\n";
@@ -23,10 +23,9 @@ pub fn client(target: &str) {
                         io::stdout().write(&client_buffer).unwrap();
                         io::stdout().flush().unwrap();
                     }
-                },
+                }
                 Err(error) => panic!(error.to_string()),
             }
         }
-
     }
 }

@@ -1,5 +1,5 @@
 use std::io::prelude::*;
-use std::net::{TcpListener, TcpStream, Shutdown};
+use std::net::{Shutdown, TcpListener, TcpStream};
 
 use std::collections::HashMap;
 use std::fs;
@@ -7,8 +7,8 @@ use std::fs::File;
 
 use std::sync::Arc;
 
-use crate::thread_pool::{ThreadPool};
 use crate::req::Req;
+use crate::thread_pool::ThreadPool;
 
 use daemonize::Daemonize;
 
@@ -18,14 +18,14 @@ pub fn server(target: &str) {
 
     let daemonize = Daemonize::new()
         .pid_file("demon.pid") // Every method except `new` and `start`
-        .chown_pid_file(true)      // is optional, see `Daemonize` documentation
+        .chown_pid_file(true) // is optional, see `Daemonize` documentation
         // .working_directory("/tmp") // for default behaviour.
         // .user("nobody")
         // .group("daemon") // Group name
         // .group(2)        // or group id.
         // .umask(0o777)    // Set umask, `0o027` by default.
-        .stdout(stdout)  // Redirect stdout to `/tmp/daemon.out`.
-        .stderr(stderr)  // Redirect stderr to `/tmp/daemon.err`.
+        .stdout(stdout) // Redirect stdout to `/tmp/daemon.out`.
+        .stderr(stderr) // Redirect stderr to `/tmp/daemon.err`.
         .exit_action(|| eprintln!("Daemon started?"))
         .privileged_action(|| "Executed before drop privileges");
 
@@ -38,7 +38,7 @@ pub fn server(target: &str) {
             eprintln!("Success, daemonized");
             start(shared, target);
             eprintln!("Done");
-        },
+        }
         Err(e) => eprintln!("Error, {}", e),
     }
 }
@@ -64,7 +64,7 @@ fn start(shared: Shared, target: &str) {
 
 #[derive(Default)]
 struct Shared {
-    cache: HashMap<String, String>
+    cache: HashMap<String, String>,
 }
 
 impl Shared {
@@ -74,7 +74,10 @@ impl Shared {
         contents
     }
     pub fn get_file(&self, file: &str) -> String {
-        self.cache.get(file).map(|x|x.clone()).expect(format!("File {} was not pre loaded", file).as_str())
+        self.cache
+            .get(file)
+            .map(|x| x.clone())
+            .expect(format!("File {} was not pre loaded", file).as_str())
     }
 }
 

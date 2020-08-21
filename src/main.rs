@@ -1,13 +1,13 @@
-mod thread_pool;
+mod client;
 mod req;
 mod server;
-mod client;
+mod thread_pool;
 
-use server::server;
 use client::client;
+use server::server;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let args: Vec<String> = std::env::args().collect();
     let mut is_daemon = false;
 
     for arg in args.iter() {
