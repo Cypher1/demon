@@ -1,0 +1,11 @@
+[package]
+name = "daemon_with_cli"
+version = "0.1.0"
+authors = ["Josh Pratt <jopra@chromium.org>"]
+edition = "2018"
+
+[[bin]]
+name = "demon"
+path = "src/main.rs"
+
+[dependencies]
