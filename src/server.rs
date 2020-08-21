@@ -85,7 +85,6 @@ fn handle_connection(shared: Arc<Shared>, mut stream: TcpStream) {
 
     let request_str = String::from_utf8_lossy(&buffer[..]);
     let request = Req::from_string(request_str.to_string());
-    // eprintln!("Request: {:#?}", request);
 
     let contents = if request.path == "/" {
         shared.get_file(HELLO)
