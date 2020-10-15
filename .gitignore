@@ -1,3 +1,6 @@
 /target
 **/*.rs.bk
 demon
+demon.err
+demon.out
+demon.pid
