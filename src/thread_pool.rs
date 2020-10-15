@@ -2,7 +2,8 @@ use std::sync::{mpsc, Arc, Mutex};
 type Worker = Option<std::thread::JoinHandle<()>>;
 type Job = Box<dyn FnOnce() + Send + 'static>;
 pub struct ThreadPool {
-    workers: Vec<Worker>,
+    #[allow(dead_code)]
+    workers: Vec<Worker>, // Needed for RAII
     sender: mpsc::Sender<Job>,
 }
 
